@@ -92,7 +92,16 @@ const ExcelUpload = () => {
     setEditRow({ ...editRow, [key]: event.target.value });
   };
 
+  function formatDateToISO(dateString) {
+    const [day, month, year] = dateString.split("-");
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return date.toISOString();
+  }
+  
   const handleSave = (id) => {
+    console.log("editRow", editRow);
+    const dobDate = formatDateToISO(editRow.dob);
+    editRow.dob = dobDate;
     if (editIndex !== null) {
       UpdateUsers(id, editRow)
         .then((res) => {
